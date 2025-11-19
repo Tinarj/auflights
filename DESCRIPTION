@@ -18,11 +18,8 @@ LazyData: true
 Depends: R (>= 4.0.0)
 RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/Tinarj/auflights
+URL: https://github.com/Tinarj/auflights, https://tinarj.github.io/auflights/
 BugReports: https://github.com/Tinarj/auflights/issues
 Suggests: 
     dplyr, 
     janitor
-    
-   
-
