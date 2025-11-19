@@ -1,0 +1,36 @@
+#' International airline traffic by carrier to and from Australia
+#'
+#' @description
+#' Monthly flights, passenger and seat counts for international airlines
+#' operating services to and from Australia, grouped by airline and country of
+#' service, from 2016 onward.
+#'
+#' @format
+#' Data frame with columns:
+#' \describe{
+#'   \item{airline}{Airline name.}
+#'   \item{country}{Country of service}
+#'   \item{n_flights_in}{Number of flights inbound to Australia in the month.}
+#'   \item{n_passengers_in}{Passengers carried inbound to Australia on those
+#'     flights. For some airlines this includes passengers transiting via
+#'     Australia.}
+#'   \item{n_seats_in}{Available seats inbound to Australia.}
+#'   \item{n_flights_out}{Number of flights outbound from Australia in the
+#'     month.}
+#'   \item{n_passengers_out}{Passengers carried outbound from Australia.}
+#'   \item{year}{Calendar year.}
+#'   \item{month}{Calendar month (1–12).}
+#' }
+#'
+#' @source
+#' Bureau of Infrastructure and Transport Research Economics (BITRE). Downloaded from
+#' <https://www.bitre.gov.au/publications/ongoing/international_airline_activity-time_series>.
+#'
+#' @examples
+#' # Top 10 carriers by total inbound passengers since 2016
+#' au_int_airlines |>
+#'   dplyr::group_by(airline) |>
+#'   dplyr::summarise(total_in = sum(n_passengers_in, na.rm = TRUE)) |>
+#'   dplyr::arrange(dplyr::desc(total_in)) |>
+#'   dplyr::slice_head(n = 10)
+"au_int_airlines"

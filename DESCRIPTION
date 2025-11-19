@@ -1,14 +1,17 @@
 Package: auflights
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Australian Aviation Data for Teaching
 Version: 0.1.0
 Authors@R: c(
-    person("Tina", "Rashid Jafari",
+   person("Tina", "Rashid Jafari",
            email = "tina.rashidjafari@gmail.com",
            role = c("aut", "cre"),
            comment = c(ORCID = "https://orcid.org/0009-0008-3605-5341")))
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
+Description: auflights is an R data package of Australian aviation activity
+    before, during and after COVID-19. It brings together monthly domestic and
+    international route data, airport traffic, air fare indices, CPI, exchange
+    rates and air-distance tables so that students and researchers can explore
+    how travel patterns and costs have changed from roughly 2016–2025.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -17,3 +20,9 @@ RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/Tinarj/auflights
 BugReports: https://github.com/Tinarj/auflights/issues
+Suggests: 
+    dplyr, 
+    janitor
+    
+   
+
