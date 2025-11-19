@@ -1,0 +1,21 @@
+auflights is an R data package of Australian aviation activity before,
+during and after COVID-19. It brings together monthly domestic and
+international route data, airport traffic, air fare indices, CPI,
+exchange rates and air-distance tables so that students and researchers
+can explore how travel patterns and costs have changed from roughly
+2016–2025.
+
+# Package index
+
+## All functions
+
+- [`au_dom_routes`](https://tinarj.github.io/auflights/reference/au_dom_routes.md)
+  : Monthly top domestic routes in Australia
+- [`au_int_airlines`](https://tinarj.github.io/auflights/reference/au_int_airlines.md)
+  : International airline traffic by carrier to and from Australia
+- [`au_int_citypairs`](https://tinarj.github.io/auflights/reference/au_int_citypairs.md)
+  : International airline flights and seats by airline, route and city
+  pair
+- [`au_int_routes`](https://tinarj.github.io/auflights/reference/au_int_routes.md)
+  : International airline city-pair passengers to and from Australia
+
