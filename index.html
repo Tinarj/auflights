@@ -45,8 +45,161 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9">
-auflights is an R data package of Australian aviation activity before, during and after COVID-19. It brings together monthly domestic and international route data, airport traffic, air fare indices, CPI, exchange rates and air-distance tables so that students and researchers can explore how travel patterns and costs have changed from roughly 2016–2025.
+  <main id="main" class="col-md-9"><div class="section level3">
+<h3 id="australian-aviation-activity--economic-indicators">
+<em>Australian aviation activity &amp; economic indicators</em><a class="anchor" aria-label="anchor" href="#australian-aviation-activity--economic-indicators"></a>
+</h3>
+<p><strong>auflights</strong> is an R <em>data package</em> containing a collection of Australian aviation datasets, including domestic routes, international airline activity, air fares, CPI, and exchange rates. It is designed for <strong>teaching</strong>, <strong>exploratory analysis</strong> and <strong>visualisation</strong>.</p>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install directly from GitHub:</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Tinarj/auflights"</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="included-datasets">Included datasets<a class="anchor" aria-label="anchor" href="#included-datasets"></a>
+</h2>
+<p>The package provides the following cleaned &amp; documented datasets:</p>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr class="header">
+<th>Dataset</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><strong>au_dom_routes</strong></td>
+<td>Monthly domestic city-pair flights, seats, and passengers (2016–2025) from BITRE.</td>
+</tr>
+<tr class="even">
+<td><strong>au_int_airlines</strong></td>
+<td>Monthly international flights &amp; passengers inbound/outbound by city-pair and airline (2016–2025).</td>
+</tr>
+<tr class="odd">
+<td><strong>au_int_routes</strong></td>
+<td>Disaggregated international city-pair routing from BITRE.</td>
+</tr>
+<tr class="even">
+<td><strong>airfares_domestic</strong></td>
+<td>Domestic airfare indices (business &amp; economy).</td>
+</tr>
+<tr class="odd">
+<td><strong>cpi</strong></td>
+<td>Consumer Price Index (ABS).</td>
+</tr>
+<tr class="even">
+<td><strong>exchange_rates</strong></td>
+<td>RBA exchange rate historical series.</td>
+</tr>
+</tbody>
+</table>
+<p>Raw Excel files are stored in <code>data-raw/original/</code>, and cleaned <code>.rda</code> files are stored in <code>data/</code>.</p>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="example-domestic-route-analysis">Example: domestic route analysis<a class="anchor" aria-label="anchor" href="#example-domestic-route-analysis"></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Tinarj/auflights" class="external-link">auflights</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">au_dom_routes</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">origin_city</span> <span class="op">==</span> <span class="st">"Sydney"</span>, <span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">2019</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>passengers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n_passengers</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">year</span>, <span class="va">passengers</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Sydney outbound passengers (2019–2025)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu">label_comma</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="100%"></p>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="example-international-inbound-passengers-by-country">Example: international inbound passengers by country<a class="anchor" aria-label="anchor" href="#example-international-inbound-passengers-by-country"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">in_passengers</span> <span class="op">&lt;-</span> <span class="va">au_int_airlines</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">country</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>inbound <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n_passengers_in</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">inbound</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="fu">kableExtra</span><span class="fu">::</span><span class="fu">kable</span><span class="op">(</span><span class="va">in_passengers</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">country</th>
+<th align="right">inbound</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">New Zealand</td>
+<td align="right">27249699</td>
+</tr>
+<tr class="even">
+<td align="left">Singapore</td>
+<td align="right">21602843</td>
+</tr>
+<tr class="odd">
+<td align="left">United Arab Emirates</td>
+<td align="right">13327142</td>
+</tr>
+<tr class="even">
+<td align="left">Indonesia</td>
+<td align="right">12132675</td>
+</tr>
+<tr class="odd">
+<td align="left">USA</td>
+<td align="right">10773639</td>
+</tr>
+<tr class="even">
+<td align="left">China</td>
+<td align="right">10316992</td>
+</tr>
+<tr class="odd">
+<td align="left">Malaysia</td>
+<td align="right">9100647</td>
+</tr>
+<tr class="even">
+<td align="left">Hong Kong (SAR)</td>
+<td align="right">8304588</td>
+</tr>
+<tr class="odd">
+<td align="left">Japan</td>
+<td align="right">5528996</td>
+</tr>
+<tr class="even">
+<td align="left">Thailand</td>
+<td align="right">5424765</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="data-sources">Data sources<a class="anchor" aria-label="anchor" href="#data-sources"></a>
+</h2>
+<ul>
+<li><p><strong>BITRE – Bureau of Infrastructure and Transport Research Economics</strong> Domestic &amp; International Airline Activity <a href="https://www.bitre.gov.au" class="external-link uri">https://www.bitre.gov.au</a></p></li>
+<li><p><strong>ABS – Australian Bureau of Statistics</strong> CPI indices <a href="https://www.abs.gov.au" class="external-link uri">https://www.abs.gov.au</a></p></li>
+<li><p><strong>Reserve Bank of Australia (RBA)</strong> Exchange rates (F11 series) <a href="https://www.rba.gov.au/statistics/" class="external-link uri">https://www.rba.gov.au/statistics/</a></p></li>
+</ul>
+<p>All data is public and reproducible.</p>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="contributions">Contributions<a class="anchor" aria-label="anchor" href="#contributions"></a>
+</h2>
+<p>Feel free to open issues or pull requests. Feedback and extensions are always welcome!</p>
+</div>
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
