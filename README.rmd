@@ -1,3 +1,18 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
 
 ### *Australian aviation activity & economic indicators*
 
@@ -47,7 +62,8 @@ au_dom_routes |>
   geom_line() +
   labs(title = "Sydney outbound passengers (2019–2025)") +
   scale_y_continuous(labels = scales::label_comma()) +
-  theme_bw() 
+  theme_bw() +
+  theme(aspect.ratio = 1)
 ```
 
 ---
